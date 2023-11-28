@@ -11,4 +11,8 @@ import AppHeading from './components/AppHeading.vue';
     </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+main {
+    margin-top: 16px;
+}
+</style>

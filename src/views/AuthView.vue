@@ -5,8 +5,12 @@ import AuthForm from '../components/AuthForm.vue';
 <template>
     <section>
         <h2>Sign in or register</h2>
-        <AuthForm />
+        <AuthForm class="auth-form" />
     </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+.auth-form {
+    margin-top: 16px;
+}
+</style>

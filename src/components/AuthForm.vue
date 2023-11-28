@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-
+import { useRouter } from 'vue-router';
 import { logIn, signUp } from '../models/auth';
 import { setToken } from '../utils/token';
 
+const router = useRouter();
 const username = ref('');
 const password = ref('');
 const isSignUpForm = ref(false);
@@ -24,6 +25,8 @@ const handleSubmit = async () => {
     }
 
     setToken(token);
+
+    router.replace({ name: 'todos' });
 };
 </script>
 
@@ -61,10 +64,6 @@ const handleSubmit = async () => {
 </template>
 
 <style scoped>
-form {
-    padding: 24px 0;
-}
-
 .input-wrapper {
     margin-bottom: 16px;
 }
