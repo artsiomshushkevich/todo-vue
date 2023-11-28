@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { create } from '../models/todo';
+import { create, type Todo } from '../models/todo';
 
-const props = defineProps<{ onSuccess: () => void }>();
+const props = defineProps<{ onSuccess: (newTodo: Todo) => void }>();
 
 const todo = ref('');
 const isLoading = ref(false);
@@ -11,9 +11,9 @@ const isSubmissionEanbled = computed(() => todo.value.length > 0 || !isLoading.v
 const handleSubmit = async () => {
     isLoading.value = true;
 
-    await create(todo.value);
+    const newTodo = await create(todo.value);
 
-    props.onSuccess();
+    props.onSuccess(newTodo);
 
     todo.value = '';
     isLoading.value = false;

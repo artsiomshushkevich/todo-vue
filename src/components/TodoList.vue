@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { type Todo } from '../models/todo';
+import TodoListItem from './TodoListItem.vue';
 
 const { todos, onRemove, onUpdate } = defineProps<{
     todos: Todo[];
@@ -7,10 +9,14 @@ const { todos, onRemove, onUpdate } = defineProps<{
     onUpdate: (updatedTodo: Todo) => void;
 }>();
 
-const handleRemove = (todo: Todo) => {
-    console.log('todo');
+const isLoading = ref(false);
+
+const handleRemove = async (todo: Todo) => {
+    isLoading.value = true;
 
     onRemove(todo);
+
+    isLoading.value = false;
 };
 
 const handleUpdate = (updatedTodo: Todo) => {
@@ -20,10 +26,15 @@ const handleUpdate = (updatedTodo: Todo) => {
 
 <template>
     <ul>
-        <li v-for="(todo, index) in todos" :key="todo.id">
-            {{ `${index + 1}.` }}&nbsp; {{ todo.todo }}&nbsp;
-            <button @click="onRemove(todo)">Remove</button>
-        </li>
+        <TodoListItem
+            v-for="(todo, index) in todos"
+            :key="todo.id"
+            class="todo"
+            :index="index"
+            :todo="todo"
+            :on-remove="handleRemove"
+            :on-update="handleUpdate"
+        />
     </ul>
 </template>
 
@@ -33,13 +44,7 @@ ul {
     padding: 0;
 }
 
-li {
-    border: 1px solid black;
-    border-radius: 3px;
-    padding: 16px;
-}
-
-li:not(:first-child) {
+.todo:not(:first-child) {
     margin-top: 8px;
 }
 </style>

@@ -24,9 +24,11 @@ const handleSubmit = async () => {
         token = logInResponse.token;
     }
 
-    setToken(token);
+    if (token) {
+        setToken(token);
 
-    router.replace({ name: 'todos' });
+        router.replace({ name: 'todos' });
+    }
 };
 </script>
 
@@ -51,6 +53,7 @@ const handleSubmit = async () => {
                 name="password"
                 id="password"
                 placeholder="Enter password (more than 8 characters length)"
+                autocomplete="off"
             />
         </div>
 

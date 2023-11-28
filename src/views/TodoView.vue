@@ -13,16 +13,20 @@ const getAllTodos = async () => {
     isLoading.value = false;
 };
 
-const handleSuccess = () => {
-    getAllTodos();
+const handleSuccess = (todo: Todo) => {
+    todos.value.push(todo);
 };
 
 const handleRemove = (todo: Todo) => {
-    console.log(todo);
+    const index = todos.value.findIndex((item) => item.id === todo.id);
+    todos.value.splice(index, 1);
 };
 
-const handleUpdate = (updatedTodo: Todo) => {
-    console.log(updatedTodo);
+const handleUpdate = (todo: Todo) => {
+    const index = todos.value.findIndex((item) => item.id === todo.id);
+    todos.value[index] = {
+        ...todo
+    };
 };
 
 onMounted(async () => {
@@ -35,7 +39,7 @@ onMounted(async () => {
         <h2>My Todos</h2>
         <TodoForm class="todo-form" :on-success="handleSuccess" />
 
-        <p v-if="isLoading">Loading...</p>
+        <p class="loader" v-if="isLoading">Loading...</p>
         <TodoList
             v-else
             class="todo-list"
@@ -48,6 +52,7 @@ onMounted(async () => {
 
 <style scoped>
 section,
+.loader,
 .todo-form,
 .todo-list {
     margin-top: 16px;
