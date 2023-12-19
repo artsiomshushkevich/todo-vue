@@ -6,7 +6,7 @@ const props = defineProps<{ onSuccess: (newTodo: Todo) => void }>();
 
 const todo = ref('');
 const isLoading = ref(false);
-const isSubmissionEanbled = computed(() => todo.value.length > 0 || !isLoading.value);
+const isSubmissionEanbled = computed(() => todo.value.length > 0 && !isLoading.value);
 
 const handleSubmit = async () => {
     isLoading.value = true;
@@ -30,7 +30,7 @@ const handleSubmit = async () => {
                 type="text"
                 name="newTodo"
                 id="newTodo"
-                placeholder="Enter email"
+                placeholder="Enter todo"
             />
             &nbsp;
             <button :disabled="!isSubmissionEanbled">{{ isLoading ? 'Loading' : 'Add' }}</button>
